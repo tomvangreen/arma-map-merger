@@ -1,0 +1,265 @@
+version=12;
+class Mission
+{
+	addOns[]=
+	{
+		"A3_Characters_F_BLUFOR",
+		"a3_characters_f",
+		"A3_Characters_F_OPFOR",
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"A3_Characters_F_BLUFOR",
+		"a3_characters_f",
+		"a3_map_altis"
+	};
+	randomSeed=3040897;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+	class Groups
+	{
+		items=1;
+		class Item0
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=4;
+				class Item0
+				{
+					azimut=208.798;
+					special="NONE";
+					id=0;
+					side="WEST";
+					vehicle="B_soldier_M_F";
+					player="PLAYER COMMANDER";
+					leader=1;
+					skill=0.60000002;
+					init="FOOB = [this] execVM ""setupPlayer.sqf""; this addeventhandler [""respawn"",""_this execVM 'setupPlayer.sqf'""];";
+				};
+				class Item2
+				{
+					azimut=208.798;
+					special="NONE";
+					id=2;
+					side="WEST";
+					vehicle="B_soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="FOOB = [this] execVM ""setupPlayer.sqf""; this addeventhandler [""respawn"",""_this execVM 'setupPlayer.sqf'""];";
+				};
+				class Item4
+				{
+					azimut=208.798;
+					special="NONE";
+					id=4;
+					side="WEST";
+					vehicle="B_soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="FOOB = [this] execVM ""setupPlayer.sqf""; this addeventhandler [""respawn"",""_this execVM 'setupPlayer.sqf'""];";
+				};
+				class Markers
+				{
+					items=4;
+					class Item0
+					{
+						name="respawn_west";
+						type="Empty";
+					};
+					class Item2
+					{
+						name="spawnBomosRidgeLabel_1";
+						text="Spawn: Bomos Ridge";
+						markerType="ELLIPSE";
+						type="Empty";
+						colorName="ColorGreen";
+						fillName="SolidBorder";
+						a=30;
+						b=30;
+						drawBorder=1;
+					};
+					class Item4
+					{
+						name="spawnThronos";
+						text="Spawn: Bomos Ridge";
+						markerType="ELLIPSE";
+						type="Empty";
+						colorName="ColorGreen";
+						fillName="SolidBorder";
+						a=30;
+						b=30;
+						drawBorder=1;
+					};
+					class Sensors
+					{
+						items=11;
+						class Item0
+						{
+							a=30;
+							b=30;
+							activationBy="ALPHA";
+							interruptable=1;
+							age="UNKNOWN";
+							name="spawnBomosRidge";
+							expCond="true";
+							expActiv="FOOB = [getPos spawnBomosRidge, ""Spawn: Bomos Ridge""] execVM ""setSpawn.sqf"";";
+							class Effects
+							{
+							};
+						};
+						class Effects
+						{
+						};
+						class Item2
+						{
+							a=30;
+							b=30;
+							activationBy="BRAVO";
+							interruptable=1;
+							age="UNKNOWN";
+							name="spawmShed";
+							expCond="true";
+							expActiv="FOOB = [getPos spawnShed, ""Spawn: Shed""] execVM ""setSpawn.sqf"";";
+							class Effects
+							{
+							};
+						};
+						class Effects
+						{
+						};
+						class Item4
+						{
+							a=30;
+							b=30;
+							activationBy="CHARLIE";
+							interruptable=1;
+							age="UNKNOWN";
+							name="spawmOrea";
+							expCond="true";
+							expActiv="FOOB = [getPos spawnOreo, ""Spawn: Oreo""] execVM ""setSpawn.sqf"";";
+							class Effects
+							{
+							};
+						};
+						class Effects
+						{
+						};
+						class Item6
+						{
+							a=30;
+							b=30;
+							activationBy="CHARLIE";
+							interruptable=1;
+							age="UNKNOWN";
+							name="spawmThronos";
+							expCond="true";
+							expActiv="FOOB = [getPos spawnThronos, ""Spawn: Thronos""] execVM ""setSpawn.sqf"";";
+							class Effects
+							{
+							};
+						};
+						class Effects
+						{
+						};
+						class Intro
+						{
+							addOns[]=
+							{
+								"a3_map_altis"
+							};
+							addOnsAuto[]=
+							{
+								"a3_map_altis"
+							};
+							randomSeed=12211958;
+							class Intel
+							{
+								timeOfChanges=1800.0002;
+								startWeather=0.30000001;
+								startWind=0.1;
+								startWaves=0.1;
+								forecastWeather=0.30000001;
+								forecastWind=0.1;
+								forecastWaves=0.1;
+								forecastLightnings=0.1;
+								year=2035;
+								month=6;
+								day=24;
+								hour=12;
+								minute=0;
+								startFogDecay=0.013;
+								forecastFogDecay=0.013;
+							};
+						};
+						class Intel
+						{
+							timeOfChanges=1800.0002;
+							startWeather=0.30000001;
+							startWind=0.1;
+							startWaves=0.1;
+							forecastWeather=0.30000001;
+							forecastWind=0.1;
+							forecastWaves=0.1;
+							forecastLightnings=0.1;
+							year=2035;
+							month=6;
+							day=24;
+							hour=12;
+							minute=0;
+							startFogDecay=0.013;
+							forecastFogDecay=0.013;
+						};
+						class OutroLoose
+						{
+							addOns[]=
+							{
+								"a3_map_altis"
+							};
+							addOnsAuto[]=
+							{
+								"a3_map_altis"
+							};
+							randomSeed=2033009;
+							class Intel
+							{
+								timeOfChanges=1800.0002;
+								startWeather=0.30000001;
+								startWind=0.1;
+								startWaves=0.1;
+								forecastWeather=0.30000001;
+								forecastWind=0.1;
+								forecastWaves=0.1;
+								forecastLightnings=0.1;
+								year=2035;
+								month=6;
+								day=24;
+								hour=12;
+								minute=0;
+								startFogDecay=0.013;
+								forecastFogDecay=0.013;
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
