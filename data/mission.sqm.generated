@@ -41,7 +41,7 @@ class Mission
 			side="WEST";
 			class Vehicles
 			{
-				items=4;
+				items=7;
 				class Item0
 				{
 					position[]={1990.7805,7.597856,22199.221};
@@ -55,12 +55,36 @@ class Mission
 					skill=0.60000002;
 					init="FOOB = [this] execVM ""setupPlayer.sqf""; this addeventhandler [""respawn"",""_this execVM 'setupPlayer.sqf'""];";
 				};
+				class Item1
+				{
+					position[]={1993.7764,5.6783152,22199.74};
+					azimut=208.798;
+					special="NONE";
+					id=1;
+					side="WEST";
+					vehicle="B_soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="FOOB = [this] execVM ""setupPlayer.sqf""; this addeventhandler [""respawn"",""_this execVM 'setupPlayer.sqf'""];";
+				};
 				class Item2
 				{
 					position[]={1992.8107,7.6930676,22197.711};
 					azimut=208.798;
 					special="NONE";
 					id=2;
+					side="WEST";
+					vehicle="B_soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="FOOB = [this] execVM ""setupPlayer.sqf""; this addeventhandler [""respawn"",""_this execVM 'setupPlayer.sqf'""];";
+				};
+				class Item3
+				{
+					position[]={1989.4928,9.6087456,22197.094};
+					azimut=208.798;
+					special="NONE";
+					id=3;
 					side="WEST";
 					vehicle="B_soldier_M_F";
 					player="PLAY CDG";
@@ -79,19 +103,57 @@ class Mission
 					skill=0.60000002;
 					init="FOOB = [this] execVM ""setupPlayer.sqf""; this addeventhandler [""respawn"",""_this execVM 'setupPlayer.sqf'""];";
 				};
+				class Item5
+				{
+					position[]={1988.6512,7.9852853,22200.236};
+					azimut=208.798;
+					special="NONE";
+					id=5;
+					side="WEST";
+					vehicle="B_soldier_M_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="FOOB = [this] execVM ""setupPlayer.sqf""; this addeventhandler [""respawn"",""_this execVM 'setupPlayer.sqf'""];";
+				};
 				class Markers
 				{
-					items=4;
+					items=6;
 					class Item0
 					{
 						position[]={2090.1665,52.709766,22180.602};
 						name="respawn_west";
 						type="Empty";
 					};
+					class Item1
+					{
+						position[]={2266.4714,98.517479,22173.402};
+						name="spawnBomosRidgeLabel";
+						text="Spawn: Bomos Ridge";
+						markerType="ELLIPSE";
+						type="Empty";
+						colorName="ColorGreen";
+						fillName="SolidBorder";
+						a=30;
+						b=30;
+						drawBorder=1;
+					};
 					class Item2
 					{
 						position[]={3783.3337,187.49094,21494.83};
 						name="spawnBomosRidgeLabel_1";
+						text="Spawn: Bomos Ridge";
+						markerType="ELLIPSE";
+						type="Empty";
+						colorName="ColorGreen";
+						fillName="SolidBorder";
+						a=30;
+						b=30;
+						drawBorder=1;
+					};
+					class Item3
+					{
+						position[]={4556.979,300.49191,21407.389};
+						name="spawnOreoLabel";
 						text="Spawn: Bomos Ridge";
 						markerType="ELLIPSE";
 						type="Empty";
@@ -132,8 +194,19 @@ class Mission
 							{
 							};
 						};
-						class Effects
+						class Item1
 						{
+							position[]={2267.3889,98.507065,22173.021};
+							a=30;
+							b=30;
+							interruptable=1;
+							age="UNKNOWN";
+							expCond="true";
+							expActiv="1 setRadioMsg ""Spawn: Bomos Ridge"";";
+							expDesactiv="1 setRadioMsg ""NULL"";";
+							class Effects
+							{
+							};
 						};
 						class Item2
 						{
@@ -150,8 +223,18 @@ class Mission
 							{
 							};
 						};
-						class Effects
+						class Item3
 						{
+							position[]={3781.9521,187.38377,21495.285};
+							a=30;
+							b=30;
+							interruptable=1;
+							age="UNKNOWN";
+							expActiv="2 setRadioMsg ""Spawn: Shed"";";
+							expDesactiv="2 setRadioMsg ""NULL"";";
+							class Effects
+							{
+							};
 						};
 						class Item4
 						{
@@ -168,8 +251,18 @@ class Mission
 							{
 							};
 						};
-						class Effects
+						class Item5
 						{
+							position[]={4555.5977,300.51627,21407.844};
+							a=30;
+							b=30;
+							interruptable=1;
+							age="UNKNOWN";
+							expActiv="3 setRadioMsg ""Spawn: Oreo"";";
+							expDesactiv="3 setRadioMsg ""NULL"";";
+							class Effects
+							{
+							};
 						};
 						class Item6
 						{
@@ -186,8 +279,18 @@ class Mission
 							{
 							};
 						};
-						class Effects
+						class Item7
 						{
+							position[]={4818.3359,338.1788,21946.547};
+							a=30;
+							b=30;
+							interruptable=1;
+							age="UNKNOWN";
+							expActiv="4 setRadioMsg ""Spawn: Thronos"";";
+							expDesactiv="4 setRadioMsg ""NULL"";";
+							class Effects
+							{
+							};
 						};
 						class Intro
 						{
@@ -219,23 +322,35 @@ class Mission
 								forecastFogDecay=0.013;
 							};
 						};
-						class Intel
+						class OutroWin
 						{
-							timeOfChanges=1800.0002;
-							startWeather=0.30000001;
-							startWind=0.1;
-							startWaves=0.1;
-							forecastWeather=0.30000001;
-							forecastWind=0.1;
-							forecastWaves=0.1;
-							forecastLightnings=0.1;
-							year=2035;
-							month=6;
-							day=24;
-							hour=12;
-							minute=0;
-							startFogDecay=0.013;
-							forecastFogDecay=0.013;
+							addOns[]=
+							{
+								"a3_map_altis"
+							};
+							addOnsAuto[]=
+							{
+								"a3_map_altis"
+							};
+							randomSeed=12580513;
+							class Intel
+							{
+								timeOfChanges=1800.0002;
+								startWeather=0.30000001;
+								startWind=0.1;
+								startWaves=0.1;
+								forecastWeather=0.30000001;
+								forecastWind=0.1;
+								forecastWaves=0.1;
+								forecastLightnings=0.1;
+								year=2035;
+								month=6;
+								day=24;
+								hour=12;
+								minute=0;
+								startFogDecay=0.013;
+								forecastFogDecay=0.013;
+							};
 						};
 						class OutroLoose
 						{

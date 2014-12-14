@@ -63,9 +63,10 @@ class Loader {
 			return loadArray(parent, row, arrayMatcher)
 		}
 
-		if(line.endsWith("};")){
+		if(line.equals("};")){
+			//TODO: Hallo
 			System.err.println(indent + "Line " + row +" : }; should not appear at this position.")
-			return row + 1
+			return row
 		}
 
 		if(line.endsWith(";")){
@@ -120,9 +121,8 @@ class Loader {
 			line = lines[row].trim()
 		}
 		indentLeft()
-		row++
 		indentLeft()
-		return row
+		return row + 1
 	}
 	int loadList(Node parent, int row, Matcher listMatcher){
 		indentRight()
@@ -138,19 +138,26 @@ class Loader {
 		parent.insertChild(list)
 
 		def line = lines[row].trim()
+		int lastRow = 0
 		while(row < lines.size() && !line.equals("};")) {
 			if(debug){
 				println(indent + "List Item")
 			}
 			def matcher= classPattern.matcher(line)
+			lastRow = row
 			if(matcher.matches()){
 				row = loadClass(list, row)
 			}
-			row ++
+			else{
+				System.err.println(indent + "Line "  + line + ": Unexpected value in load list: " + line)
+			}
+			if(row == lastRow){
+				row++
+			}
 		}
 
 		indentLeft()
-		return row
+		return row + 1
 	}
 
 	int loadClass(Node parent, int row){
