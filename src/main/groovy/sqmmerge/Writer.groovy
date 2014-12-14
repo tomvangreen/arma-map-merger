@@ -1,3 +1,4 @@
+package sqmmerge
 
 public class Writer {
 	private final StringBuilder builder = new StringBuilder()
@@ -28,7 +29,11 @@ public class Writer {
 	public String write(MissionData data){
 		builder << data.version << NL
 
-		data.root.children.each{ writeNode(it) }
+		data.root.children.each{
+			if(it != null){
+				writeNode(it)
+			}
+		}
 
 		String output = builder.toString()
 		builder.setLength(0)
@@ -50,7 +55,7 @@ public class Writer {
 				writeList(node)
 				break;
 			default:
-				if(node){
+				if(node != null){
 					System.err.println("Node Type not supported yet: " + node.type)
 				}
 				else{
@@ -64,7 +69,11 @@ public class Writer {
 		builder << indent << node.data << NL
 		builder << indent << "{" << NL
 		indentRight()
-		node.children.each{ writeNode(it) }
+		node.children.each{
+			if(it != null){
+				writeNode(it)
+			}
+		}
 
 		indentLeft()
 		builder << indent << "};" << NL
@@ -83,7 +92,11 @@ public class Writer {
 	public void writeList(Node node){
 		builder << indent << "items=" << node.children.size() << ";" << NL
 		def last = node.children.last()
-		node.children.each{ writeNode(writeClass(it)) }
+		node.children.each{
+			if(it != null){
+				writeClass(it)
+			}
+		}
 	}
 
 	public void writeArrayNode(Node node, boolean addComma){

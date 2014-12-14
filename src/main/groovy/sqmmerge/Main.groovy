@@ -1,8 +1,10 @@
+package sqmmerge
 
 public class Main{
 	public static void main(String[] args){
+		String file = 'mission.sqm'
 		println("Loader:")
-		String fileContents = new File('data/mission.sqm').text
+		String fileContents = new File('data/' + file).text
 		def loader = new Loader()
 		def data = loader.load(fileContents)
 
@@ -11,6 +13,6 @@ public class Main{
 		String output = writer.write(data)
 		println(output)
 
-		new File('data/mission.sqm.generated').write(output)
+		new File('data/' + file + '.generated').write(output)
 	}
 }

@@ -1,3 +1,4 @@
+package sqmmerge
 
 public class Node {
 	public final List<Node> children = new ArrayList<Node>()
