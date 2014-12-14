@@ -65,7 +65,7 @@ class Loader {
 
 		if(line.endsWith("};")){
 			System.err.println(indent + "Line " + row +" : }; should not appear at this position.")
-			return row
+			return row + 1
 		}
 
 		if(line.endsWith(";")){
@@ -77,7 +77,7 @@ class Loader {
 			node.data = line
 			parent.insertChild(node)
 			indentLeft()
-			return row
+			return row + 1
 		}
 		System.err.println("Line " + row +" : This part should not be called at all. Something has not been read correctly on line " + (row + 1))
 		System.err.println(line)
