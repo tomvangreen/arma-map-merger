@@ -1,7 +1,7 @@
 package sqmmerge
 
 public class Configuration{
-	public static void main(String[] args){
-		println("Hello")
-	}
+	public String outputFile;
+	public MissionConfiguration masterConfiguration;
+	public final List<MissionConfiguration> missions = new ArrayList<MissionConfiguration>()
 }

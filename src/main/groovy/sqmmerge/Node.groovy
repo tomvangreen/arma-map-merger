@@ -28,4 +28,16 @@ public class Node {
 			childrenMap.putAt(key, child)
 		}
 	}
+
+	private boolean printData(){
+		return type == NodeType.Class
+	}
+
+	@Override
+	public String toString(){
+		if(printData()){
+			return type.toString() + ': ' + data
+		}
+		return type
+	}
 }
