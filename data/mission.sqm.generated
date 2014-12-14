@@ -44,6 +44,7 @@ class Mission
 				items=4;
 				class Item0
 				{
+					position[]={1990.7805,7.597856,22199.221};
 					azimut=208.798;
 					special="NONE";
 					id=0;
@@ -56,6 +57,7 @@ class Mission
 				};
 				class Item2
 				{
+					position[]={1992.8107,7.6930676,22197.711};
 					azimut=208.798;
 					special="NONE";
 					id=2;
@@ -67,6 +69,7 @@ class Mission
 				};
 				class Item4
 				{
+					position[]={1988.1807,9.3689985,22198.254};
 					azimut=208.798;
 					special="NONE";
 					id=4;
@@ -81,11 +84,13 @@ class Mission
 					items=4;
 					class Item0
 					{
+						position[]={2090.1665,52.709766,22180.602};
 						name="respawn_west";
 						type="Empty";
 					};
 					class Item2
 					{
+						position[]={3783.3337,187.49094,21494.83};
 						name="spawnBomosRidgeLabel_1";
 						text="Spawn: Bomos Ridge";
 						markerType="ELLIPSE";
@@ -98,6 +103,7 @@ class Mission
 					};
 					class Item4
 					{
+						position[]={4819.7173,338.20581,21946.092};
 						name="spawnThronos";
 						text="Spawn: Bomos Ridge";
 						markerType="ELLIPSE";
@@ -113,6 +119,7 @@ class Mission
 						items=11;
 						class Item0
 						{
+							position[]={2266.6243,98.510605,22173.404};
 							a=30;
 							b=30;
 							activationBy="ALPHA";
@@ -130,6 +137,7 @@ class Mission
 						};
 						class Item2
 						{
+							position[]={3783.1458,187.47932,21495.068};
 							a=30;
 							b=30;
 							activationBy="BRAVO";
@@ -147,6 +155,7 @@ class Mission
 						};
 						class Item4
 						{
+							position[]={4556.791,300.50391,21407.627};
 							a=30;
 							b=30;
 							activationBy="CHARLIE";
@@ -164,6 +173,7 @@ class Mission
 						};
 						class Item6
 						{
+							position[]={4819.5293,338.20236,21946.33};
 							a=30;
 							b=30;
 							activationBy="CHARLIE";
