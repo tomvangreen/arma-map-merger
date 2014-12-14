@@ -51,7 +51,7 @@ class Loader {
 		def line = lines[row].trim()
 		def classMatcher = classPattern.matcher(line)
 		if(classMatcher.matches()){
-			return loadClass(parent, row)
+			return loadClass(parent, row) + 1
 		}
 		def listMatcher = listPattern.matcher(line)
 		if(listMatcher.matches()){
@@ -72,7 +72,7 @@ class Loader {
 		if(line.endsWith(";")){
 			indentRight()
 			if(debug){
-				println(indent + "SemicolonTerminatedLine: " + line)
+				println(indent  +"Line " + row +":SemicolonTerminatedLine: " + line)
 			}
 			def node = new Node(NodeType.SemicolonTerminatedLine, parent)
 			node.data = line
@@ -90,13 +90,13 @@ class Loader {
 
 		def name = listMatcher.group(0)
 		if(debug){
-			println(indent + "Loading array " + name)
+			println(indent +"Line " + row +":Loading array " + name)
 		}
 		row++
 
 
 		if(!lines[row].trim().equals("{")){
-			println(indent + "Found unexpected content: ")
+			println(indent +"Line " + row +":Found unexpected content: ")
 			println(indent + lines[row].trim())
 		}
 
@@ -113,7 +113,7 @@ class Loader {
 			}
 			def node = new Node(NodeType.ArrayItem, parent, line)
 			if(debug){
-				println(indent + "ArrayItem: " + line)
+				println(indent +"Line " + row +":ArrayItem: " + line)
 			}
 			array.insertChild(node)
 
@@ -128,7 +128,7 @@ class Loader {
 		indentRight()
 
 		if(debug){
-			println(indent + "Loading list")
+			println(indent   +"Line " + row +":Loading list")
 		}
 
 		row++
@@ -139,25 +139,25 @@ class Loader {
 
 		def line = lines[row].trim()
 		int lastRow = 0
+		lastRow = row - 1
 		while(row < lines.size() && !line.equals("};")) {
 			if(debug){
-				println(indent + "List Item")
+				println(indent  +"Line " + row +":List Item")
 			}
 			def matcher= classPattern.matcher(line)
 			lastRow = row
 			if(matcher.matches()){
-				row = loadClass(list, row)
+				row = loadClass(list, row) + 1
 			}
 			else{
 				System.err.println(indent + "Line "  + line + ": Unexpected value in load list: " + line)
+				return row + 1
 			}
-			if(row == lastRow){
-				row++
-			}
+			line = lines[row].trim()
 		}
 
 		indentLeft()
-		return row + 1
+		return row
 	}
 
 	int loadClass(Node parent, int row){
@@ -170,7 +170,7 @@ class Loader {
 		}
 		def name = classMatcher.group(0)
 		if(debug){
-			println(indent + "Loading class " + name)
+			println(indent +"Line " + row +":Loading class " + name)
 		}
 		def clazz = new Node(NodeType.Class, parent, name)
 		parent.insertChild(name, clazz)
@@ -194,6 +194,6 @@ class Loader {
 			}
 		}
 		indentLeft()
-		row + 1
+		row
 	}
 }
