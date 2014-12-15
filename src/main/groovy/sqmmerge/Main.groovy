@@ -1,6 +1,9 @@
 package sqmmerge
 
+import sqmmerge.model.MissionSet
+
 public class Main{
+	public final static boolean debug = true;
 	public static void main(String[] args){
 		//		testMerge()
 		testLoader2()
@@ -40,15 +43,13 @@ public class Main{
 		new File('data/' + file + '.generated').write(output)
 	}
 	private static testLoader2() {
-		String file = 'merge-src-2.sqm'
+		String file = 'biggermission.sqm'
 		println('Loader:')
 		String fileContents = new File('data/' + file).text
-		def loader = new sqmmerge.model.Loader()
-		def data = loader.load(fileContents)
-
+		MissionSet set = new MissionSet()
+		set.load(fileContents)
 		println("Output:")
-		def writer = new Writer()
-		String output = writer.write(data)
+		String output = set.toString()
 		println(output)
 
 		new File('data/' + file + '.generated').write(output)

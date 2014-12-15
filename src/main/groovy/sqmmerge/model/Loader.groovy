@@ -2,80 +2,95 @@ package sqmmerge.model
 
 import java.util.regex.Pattern
 
-import sqmmerge.MissionData
-
-
-
-
+import sqmmerge.util.Indent
 
 class Loader {
 	private String[] lines
-	public boolean debug = true;
-	String indent = ""
-
-
 
 	Pattern classPattern = ~/class (\w*)/
 	Pattern listPattern = ~/items=([0-9]*);/
 	Pattern simpleArrayPattern = ~/([\w]*)\[\]=/
+	Pattern stringArrayItem = ~/^"([^"]*)",?$/
 
+	private int row
 
-	def indentRight(){
-		indent = indent + " "
+	private final Indent indent = new Indent("  ")
 
-		//println(indent + "> Indent on: " + indent)
+	private def err(String message, boolean throwException = true){
+		System.err.println("Line " + (row + 1) + ":\t"  + indent + message)
+		if(throwException){
+			throw new RuntimeException(message)
+		}
+	}
+	private def info(String message){
+		println("L" + (row + 1) + ":\t" + indent + message)
 	}
 
-	def indentLeft() {
-		if(indent.length() > 1){
-			indent = indent.substring(1)
-		}
-		else if(indent.length() == 1){
-			indent = ""
-		}
-		//println(indent + "< Indent on: " + indent)
-	}
 
-	MissionData load(String content){
+	MissionSet load(String content){
+		info("Loading Misison File")
 		MissionSet set = new MissionSet()
 		lines = content.split('\n')
 
 		set.version = lines[0]
 
-		int row = 1
-		while(row < lines.length){
-			row = loadMission(set, row)
-			row ++
-		}
 
+		try{
+			row = 1
+			indent.right();
+			while(row < lines.length){
+				loadMission(set)
+				row ++
+			}
+			indent.left();
+		}
+		catch(Exception ex){
+			err(ex.getMessage(), false)
+		}
 		set
 	}
 
-	int loadMission(MissionSet set, int row){
-		def line = lines[row].trim()
+	def loadMission(MissionSet set){
+		def line = getLine()
 		if(debug){
-			println(indent + 'Loading Mission: ')
+			info('Loading Mission: ')
 		}
 		if(!line.startsWith('class ')){
-			System.err.println(indent + 'Line ' + line + ': Invalid content. Expceted class <class-name>')
-			return
+			err('Invalid content. Expceted class <class-name>')
 		}
 		Mission mission = new Mission()
 		mission.name = line.substring(6)
+		if(debug){
+		}
+		if(!nextLine().equals("{")){
+			err("Expected '{'")
+		}
+		row++
+		indent.right()
+		while(!getLine().equals("};")){
+			loadMissionItem(mission)
+		}
+		indent.left()
+
+		if(!nextLine().equals("};")){
+			err("Expected '};'")
+		}
+		nextLine()
+
 		if("Mission".equals(mission.name)){
 			set.mission = mission
 		}
-		else if("Intro"){
+		else if("Intro".equals(mission.name)){
 			set.intro = mission
-		};
-		else if("OutroWin"){
+		}
+		else if("OutroWin".equals(mission.name)){
 			set.outroWin = mission
-		};
-		else if("OutroLoose"){
+		}
+		else if("OutroLoose".equals(mission.name)){
 			set.outroLoose = mission
-		};
+		}
 		else{
-			System.err.println(indent + 'Line ' + line + ': Mission name not recognized: ' + mission.name)
-		};
+			err('Mission name not recognized: ' + mission.name)
+		}
 	}
 }
