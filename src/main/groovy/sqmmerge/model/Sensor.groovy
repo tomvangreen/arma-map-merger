@@ -66,6 +66,15 @@ public class Sensor implements Node {
 		writer << Control.Next << '{'
 		writer << Control.Right
 
+		position?.write(writer)
+		activationBy?.write(writer)
+		repeating?.write(writer)
+		interruptable?.write(writer)
+		age?.write(writer)
+		expActiv?.write(writer)
+		effects?.write(writer)
+
+
 		writer << Control.Left << Control.Next
 		writer << '};'
 	}

@@ -3,14 +3,18 @@ package sqmmerge.model
 import sqmmerge.model.Writer.Control
 
 
+
 public class Intel implements Node{
 	public KeyValue timeOfChanges
 	public KeyValue startWeather
 	public KeyValue startWind
+	public KeyValue startWindDir
+	public KeyValue startLightnings
 	public KeyValue startWaves
 	public KeyValue forecastWeather
 	public KeyValue forecastWind
 	public KeyValue forecastWaves
+	public KeyValue startGust
 	public KeyValue forecastLightnings
 	public KeyValue year
 	public KeyValue month
@@ -18,25 +22,13 @@ public class Intel implements Node{
 	public KeyValue hour
 	public KeyValue minute
 	public KeyValue startFogDecay
-	public KeyValue forecastFogDecay
+	public KeyValue forecastFogDecay	public KeyValue rainForced	public KeyValue lightningsForced
+	public KeyValue wavesForced
+	public KeyValue windForced
 	@Override
 	public List<Node> getChildren() {
 		def list = new ArrayList<Node>()
-		list.addAll([
-			timeOfChanges,
-			startWeather,
-			startWind,
-			startWaves,
-			forecastWind,
-			forecastLightnings,
-			year,
-			month,
-			day,
-			hour,
-			minute,
-			startFogDecay,
-			forecastFogDecay
-		])
+		list.addAll([timeOfChanges, startWeather, startWind, startWaves, forecastWind, forecastLightnings, year, month, day, hour, minute, startFogDecay, forecastFogDecay])
 		return list;
 	}
 
@@ -53,58 +45,83 @@ public class Intel implements Node{
 		line = reader.nextLine()
 
 		while(!"};".equals(line)){
-			loadIntelProperty(line)
+			loadIntelProperty(line, reader)
 			line = reader.nextLine()
 		}
 		reader.nextLine()
 		intel
 	}
 
-	def loadIntelProperty(String line){
+	def loadIntelProperty(String line, Reader reader){
 		if(line.startsWith("timeOfChanges=")){
 			timeOfChanges = new KeyValue(line)
 		}
-		if(line.startsWith("startWeather=")){
+		else if(line.startsWith("startWeather=")){
 			startWeather = new KeyValue(line)
 		}
-		if(line.startsWith("startWind=")){
+		else if(line.startsWith("startWind=")){
 			startWind = new KeyValue(line)
 		}
-		if(line.startsWith("startWaves=")){
+		else if(line.startsWith("startWaves=")){
 			startWaves = new KeyValue(line)
 		}
-		if(line.startsWith("forecastWeather=")){
+		else if(line.startsWith("forecastWeather=")){
 			forecastWeather = new KeyValue(line)
 		}
-		if(line.startsWith("forecastWind=")){
+		else if(line.startsWith("forecastWind=")){
 			forecastWind = new KeyValue(line)
 		}
-		if(line.startsWith("forecastWaves=")){
+		else if(line.startsWith("forecastWaves=")){
 			forecastWaves = new KeyValue(line)
 		}
-		if(line.startsWith("forecastLightnings=")){
+		else if(line.startsWith("forecastLightnings=")){
 			forecastLightnings = new KeyValue(line)
 		}
-		if(line.startsWith("year=")){
+		else if(line.startsWith("year=")){
 			year = new KeyValue(line)
 		}
-		if(line.startsWith("month=")){
+		else if(line.startsWith("month=")){
 			month = new KeyValue(line)
 		}
-		if(line.startsWith("day=")){
+		else if(line.startsWith("day=")){
 			day = new KeyValue(line)
 		}
-		if(line.startsWith("hour=")){
+		else if(line.startsWith("hour=")){
 			hour = new KeyValue(line)
 		}
-		if(line.startsWith("minute=")){
+		else if(line.startsWith("minute=")){
 			minute = new KeyValue(line)
 		}
-		if(line.startsWith("startFogDecay=")){
+		else if(line.startsWith("startFogDecay=")){
 			startFogDecay = new KeyValue(line)
 		}
-		if(line.startsWith("forecastFogDecay=")){
+		else if(line.startsWith("forecastFogDecay=")){
 			forecastFogDecay = new KeyValue(line)
+		}
+		else if(line.startsWith("startWindDir=")){
+			startWindDir = new KeyValue(line)
+		}
+		else if(line.startsWith("startLightnings=")){
+			startLightnings = new KeyValue(line)
+		}
+		else if(line.startsWith("startGust")){
+			startGust = new KeyValue(line)
+		}
+		else if(line.startsWith("rainForced=")){
+			rainForced = new KeyValue(line)
+		}
+		else if(line.startsWith("lightningsForced=")){
+			lightningsForced = new KeyValue(line)
+		}
+		else if(line.startsWith("wavesForced=")){
+			wavesForced = new KeyValue(line)
+		}
+		else if(line.startsWith("windForced=")){
+			windForced = new KeyValue(line)
+		}
+		else{
+			reader.err('Intel: Unknown Property: ', false)
+			reader.err(line)
 		}
 	}
 
@@ -118,11 +135,18 @@ public class Intel implements Node{
 		timeOfChanges?.write(writer)
 		startWeather?.write(writer)
 		startWind?.write(writer)
+		startWindDir?.write(writer)
+		startLightnings?.write(writer)
 		startWaves?.write(writer)
+		startGust?.write(writer)
 		forecastWeather?.write(writer)
 		forecastWind?.write(writer)
 		forecastWaves?.write(writer)
 		forecastLightnings?.write(writer)
+		rainForced?.write(writer)
+		lightningsForced?.write(writer)
+		wavesForced?.write(writer)
+		windForced?.write(writer)
 		year?.write(writer)
 		month?.write(writer)
 		day?.write(writer)

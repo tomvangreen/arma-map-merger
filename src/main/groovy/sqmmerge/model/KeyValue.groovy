@@ -15,9 +15,10 @@ public class KeyValue implements Node {
 	}
 
 	public KeyValue(String line){
-		def splitted = line.split('=')
-		key = splitted[0]
-		value = splitted[1].substring(0, splitted[1].size() - 1)
+		def index = line.indexOf('=')
+		key = line.substring(0, index)
+		value = line.substring(index + 1)
+		value = value.substring(0, value.size() - 1)
 	}
 
 	public KeyValue(String key, String value){

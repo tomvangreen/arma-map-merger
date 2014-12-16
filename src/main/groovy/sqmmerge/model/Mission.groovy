@@ -110,6 +110,9 @@ class Mission implements Node{
 		randomSeed?.write(writer)
 		intel?.write(writer)
 		groups?.write(writer)
+		vehicles?.write(writer)
+		markers?.write(writer)
+		sensors?.write(writer)
 
 		writer << Control.Left << Control.Next
 		writer << '};'

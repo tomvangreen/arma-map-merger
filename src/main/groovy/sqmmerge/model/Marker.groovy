@@ -34,7 +34,7 @@ public class Marker implements Node {
 				reader.nextLine()
 			}
 			else if(line.startsWith("text=")){
-				name = new KeyValue(line)
+				text = new KeyValue(line)
 				reader.nextLine()
 			}
 			else if(line.startsWith("type=")){
@@ -69,6 +69,15 @@ public class Marker implements Node {
 	public void write(Writer writer) {
 		writer << Control.Next << '{'
 		writer << Control.Right
+
+		position?.write(writer)
+		name?.write(writer)
+		text?.write(writer)
+		markerType?.write(writer)
+		type?.write(writer)
+		colorName?.write(writer)
+		a?.write(writer)
+		b?.write(writer)
 
 		writer << Control.Left << Control.Next
 		writer << '};'

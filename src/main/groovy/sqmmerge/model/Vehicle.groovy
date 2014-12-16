@@ -117,14 +117,21 @@ public class Vehicle implements Node {
 
 		position?.write(writer)
 		azimut?.write(writer)
+		offsetX?.write(writer)
+		offsetY?.write(writer)
+		special?.write(writer)
 		id?.write(writer)
 		side?.write(writer)
 		vehicle?.write(writer)
+		player?.write(writer)
 		leader?.write(writer)
 		rank?.write(writer)
 		skill?.write(writer)
+		ammo?.write(writer)
 		init?.write(writer)
-
+		health?.write(writer)
+		syncId?.write(writer)
+		synchronizations?.write(writer)
 		writer << Control.Left << Control.Next
 		writer << '};'
 	}

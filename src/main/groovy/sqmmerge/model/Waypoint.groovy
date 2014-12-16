@@ -61,9 +61,11 @@ public class Waypoint implements Node {
 		writer << Control.Right
 
 		position?.write(writer)
-		position?.write(writer)
-		position?.write(writer)
-		position?.write(writer)
+		id?.write(writer)
+		type?.write(writer)
+		combat?.write(writer)
+		effects?.write(writer)
+		showWP?.write(writer)
 
 		writer << Control.Left << Control.Next
 		writer << '};'

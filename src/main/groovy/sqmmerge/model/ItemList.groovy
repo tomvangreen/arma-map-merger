@@ -71,6 +71,6 @@ public abstract class ItemList<T extends Node> implements Node{
 			}
 			writer << Control.Left
 		}
-		writer << Control.Next << '}'
+		writer << Control.Next << '};'
 	}
 }
