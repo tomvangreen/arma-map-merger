@@ -15,6 +15,7 @@ public class Marker implements Node {
 	public KeyValue markerType
 	public KeyValue a
 	public KeyValue b
+	public KeyValue angle
 
 	@Override
 	public List<Node> getChildren() {
@@ -53,12 +54,16 @@ public class Marker implements Node {
 				b = new KeyValue(line)
 				reader.nextLine()
 			}
+			else if(line.startsWith("angle=")){
+				angle = new KeyValue(line)
+				reader.nextLine()
+			}
 			else if(line.startsWith("colorName=")){
 				colorName = new KeyValue(line)
 				reader.nextLine()
 			}
 			else{
-				reader.err('Unknown situation: ', false)
+				reader.err('Marker:  Unknown situation: ', false)
 				reader.err(line)
 			}
 			line = reader.getLine()
@@ -78,6 +83,7 @@ public class Marker implements Node {
 		colorName?.write(writer)
 		a?.write(writer)
 		b?.write(writer)
+		angle?.write(writer)
 
 		writer << Control.Left << Control.Next
 		writer << '};'

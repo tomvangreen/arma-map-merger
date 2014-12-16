@@ -48,7 +48,7 @@ public class Waypoint implements Node {
 				reader.nextLine()
 			}
 			else{
-				reader.err('Unknown situation: ', false)
+				reader.err('Waypoint: Unknown situation: ', false)
 				reader.err(line)
 			}
 			line = reader.getLine()

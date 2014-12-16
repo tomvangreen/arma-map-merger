@@ -43,7 +43,7 @@ public class Main{
 		new File('data/' + file + '.generated').write(output)
 	}
 	private static testLoader2() {
-		String file = 'biggermission.sqm'
+		String file = 'many-things.sqm'
 		println('Loader:')
 		String fileContents = new File('data/' + file).text
 		MissionSet set = new MissionSet()

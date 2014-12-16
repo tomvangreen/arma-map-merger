@@ -5,11 +5,12 @@ import sqmmerge.model.Writer.Control
 
 
 
-public class Group implements Node {
 
-	KeyValue side
-	Vehicles vehicles
-	Waypoints waypoints
+public class Arg implements Node {
+
+	public KeyValue value
+	public KeyValue parentCls
+	public KeyValue typeName
 
 	@Override
 	public List<Node> getChildren() {
@@ -20,20 +21,20 @@ public class Group implements Node {
 	public void read(Reader reader) {
 		def line = reader.getLine()
 		while(!"};".equals(line)){
-			if(line.startsWith("side=")){
-				side = new KeyValue(line)
+			if(line.startsWith("value=")){
+				value = new KeyValue(line)
 				reader.nextLine()
 			}
-			else if(line.startsWith("class Vehicles")){
-				vehicles = new Vehicles()
-				vehicles.read(reader)
+			else if(line.startsWith("parentCls=")){
+				parentCls = new KeyValue(line)
+				reader.nextLine()
 			}
-			else if("class Waypoints".equals(line)){
-				waypoints = new Waypoints()
-				waypoints.read(reader)
+			else if(line.startsWith("typeName=")){
+				typeName = new KeyValue(line)
+				reader.nextLine()
 			}
 			else{
-				reader.err('Group: Unknown situation: ', false)
+				reader.err('Arg: Unknown situation: ', false)
 				reader.err(line)
 			}
 			line = reader.getLine()
@@ -45,9 +46,9 @@ public class Group implements Node {
 		writer << Control.Next << '{'
 		writer << Control.Right
 
-		side?.write(writer)
-		vehicles?.write(writer)
-		waypoints?.write(writer)
+		value?.write(writer)
+		parentCls?.write(writer)
+		typeName?.write(writer)
 
 		writer << Control.Left << Control.Next
 		writer << '};'

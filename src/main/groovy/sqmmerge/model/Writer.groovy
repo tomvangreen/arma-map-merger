@@ -29,10 +29,10 @@ public class Writer {
 					builder << indent
 					break;
 				case Control.NewLine:
-					builder << '\n'
+					builder << '\r\n'
 					break;
 				case Control.Next:
-					builder << '\n' << indent
+					builder << '\r\n' << indent
 					break;
 				case Control.Left:
 					indent.left()

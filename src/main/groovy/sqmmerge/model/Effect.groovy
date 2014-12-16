@@ -8,6 +8,7 @@ import sqmmerge.model.Writer.Control
 public class Effect implements Node {
 
 
+
 	@Override
 	public List<Node> getChildren() {
 		[]
@@ -17,12 +18,10 @@ public class Effect implements Node {
 	public void read(Reader reader) {
 		def line = reader.getLine()
 		while(!"};".equals(line)){
-			if(false){
-			}
-			else{
-				reader.err('Unknown situation: ', false)
-				reader.err(line)
-			}
+			//else{
+			reader.err('Effect: Unknown situation: ', false)
+			reader.err(line)
+			//}
 			line = reader.getLine()
 		}
 	}

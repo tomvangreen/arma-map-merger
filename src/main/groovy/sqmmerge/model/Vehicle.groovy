@@ -23,6 +23,15 @@ public class Vehicle implements Node {
 	public KeyValue init
 	public KeyValue health
 	public KeyValue ammo
+	public KeyValue presence
+	public KeyValue presenceCondition
+	public KeyValue age
+	public KeyValue fuel
+	public KeyValue text
+	public KeyValue description
+	public KeyValue lock
+	public Args args
+
 
 	@Override
 	public List<Node> getChildren() {
@@ -40,6 +49,34 @@ public class Vehicle implements Node {
 			}
 			else if(line.startsWith("azimut=")){
 				azimut = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("age=")){
+				age = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("text=")){
+				text = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("description=")){
+				description = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("fuel=")){
+				fuel = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("lock=")){
+				lock = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("presenceCondition=")){
+				presenceCondition = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("presence=")){
+				presence = new KeyValue(line)
 				reader.nextLine()
 			}
 			else if(line.startsWith("offsetX=")){
@@ -102,6 +139,10 @@ public class Vehicle implements Node {
 				init = new KeyValue(line)
 				reader.nextLine()
 			}
+			else if(line.startsWith("class args")){
+				args = new Args()
+				args.read(reader)
+			}
 			else{
 				reader.err('Vehicle: Unknown situation: ', false)
 				reader.err(line)
@@ -115,23 +156,32 @@ public class Vehicle implements Node {
 		writer << Control.Next << '{'
 		writer << Control.Right
 
+		presence?.write(writer)
+		presenceCondition?.write(writer)
 		position?.write(writer)
 		azimut?.write(writer)
+		args?.write(writer)
 		offsetX?.write(writer)
 		offsetY?.write(writer)
 		special?.write(writer)
+		age?.write(writer)
 		id?.write(writer)
 		side?.write(writer)
 		vehicle?.write(writer)
 		player?.write(writer)
 		leader?.write(writer)
 		rank?.write(writer)
+		lock?.write(writer)
 		skill?.write(writer)
-		ammo?.write(writer)
-		init?.write(writer)
 		health?.write(writer)
+		fuel?.write(writer)
+		ammo?.write(writer)
+		text?.write(writer)
+		init?.write(writer)
+		description?.write(writer)
 		syncId?.write(writer)
 		synchronizations?.write(writer)
+
 		writer << Control.Left << Control.Next
 		writer << '};'
 	}
