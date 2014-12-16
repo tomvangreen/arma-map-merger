@@ -1,14 +1,17 @@
 package sqmmerge.model
 
-class Groups extends ItemList<Group>{
+
+
+
+class Effects extends ItemList<Group>{
 
 	@Override
 	public String getListName() {
-		return "Groups";
+		return "Effects";
 	}
 
 	@Override
 	public Group instanciateChild() {
-		return new Group();
+		return new Effect();
 	}
 }

@@ -8,13 +8,21 @@ import sqmmerge.model.Writer.Control
 public class Vehicle implements Node {
 	public KeyValue position
 	public KeyValue azimut
+	public KeyValue offsetX
+	public KeyValue offsetY
+	public KeyValue special
 	public KeyValue id
 	public KeyValue side
 	public KeyValue vehicle
+	public KeyValue player
 	public KeyValue leader
 	public KeyValue rank
 	public KeyValue skill
+	public KeyValue syncId
+	public KeyValue synchronizations
 	public KeyValue init
+	public KeyValue health
+	public KeyValue ammo
 
 	@Override
 	public List<Node> getChildren() {
@@ -34,6 +42,18 @@ public class Vehicle implements Node {
 				azimut = new KeyValue(line)
 				reader.nextLine()
 			}
+			else if(line.startsWith("offsetX=")){
+				offsetX = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("offsetY=")){
+				offsetY = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("special=")){
+				special = new KeyValue(line)
+				reader.nextLine()
+			}
 			else if(line.startsWith("id=")){
 				id = new KeyValue(line)
 				reader.nextLine()
@@ -46,6 +66,10 @@ public class Vehicle implements Node {
 				vehicle = new KeyValue(line)
 				reader.nextLine()
 			}
+			else if(line.startsWith("player=")){
+				player = new KeyValue(line)
+				reader.nextLine()
+			}
 			else if(line.startsWith("leader=")){
 				leader = new KeyValue(line)
 				reader.nextLine()
@@ -56,6 +80,22 @@ public class Vehicle implements Node {
 			}
 			else if(line.startsWith("skill=")){
 				skill = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("syncId=")){
+				syncId = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("synchronizations[]=")){
+				synchronizations = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("health=")){
+				health = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("ammo=")){
+				ammo = new KeyValue(line)
 				reader.nextLine()
 			}
 			else if(line.startsWith("init=")){

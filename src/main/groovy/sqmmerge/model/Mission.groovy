@@ -11,7 +11,8 @@ class Mission implements Node{
 	public StringArray addOnsAuto
 	public KeyValue randomSeed
 	public Intel intel
-	public Groups groups
+	public Groups groups
+	public Vehicles vehicles	public Markers markers	public Sensors sensors
 	@Override
 	public List<Node> getChildren() {
 		def list = new ArrayList<Node>()
@@ -74,12 +75,24 @@ class Mission implements Node{
 			intel = new Intel()
 			intel.read(reader)
 		}
+		else if("class Vehicles".equals(line)){
+			vehicles = new Vehicles()
+			vehicles.read(reader)
+		}
 		else if("class Groups".equals(line)){
 			groups = new Groups()
 			groups.read(reader)
 		}
+		else if("class Markers".equals(line)){
+			markers = new Markers()
+			markers.read(reader)
+		}
+		else if("class Sensors".equals(line)){
+			sensors = new Sensors()
+			sensors.read(reader)
+		}
 		else{
-			reader.err('Unhandled mission item: ')
+			reader.err('Unhandled mission item: ', false)
 			reader.err(line)
 			reader.nextLine()
 		}
