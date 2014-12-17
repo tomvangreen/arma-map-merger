@@ -17,9 +17,16 @@ Now in our situation we currently work as a team of two on a mission which consi
 
 In software development we try to introduce concepts to automate such processes. If the process is everytime the same there is a good chance that you can improve your productivity by automating the process. So I had a look at the mission.sqm file and I was nicely surprised that the sqm file is plain text and uses a clean structured format.
 
+What are the constraints?
+-------------------------
+Writing a parser is much work and our goal is not to write a nice parser, but to have a tool that gets the job done. So while there are some nice potential features, we want to limit ourself a bit.
+
+Currently the map merger is only intended to work with editor generated maps. Maps with manual modifications might not be readable by the parser, because it uses a very naive approach and expects the output to be formatted, like the editor would.
+
 Where are we now?
 -----------------
-We did a basic proof of concept in loading and writing the mission file, but basically we have nothing yet :D Also please keep in mind that this is a hobby project, so while we like to put as much time into it as we can, sometimes there are other more important things to do ;)
+We did a basic proof of concept in loading and writing the mission file and merging multiple files, but basically we have nothing yet :D Also please keep in mind that this is a hobby project, so while we like to put as much time into it as we can, sometimes there are other more important things to do ;)
+
 
 What are the key features we are aiming at?
 -------------------------------------------
