@@ -1,9 +1,10 @@
 package sqmmerge.model;
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
-public abstract class ItemList<T extends Node> implements Node{
+public abstract class ItemList<T extends Node<T>> implements Node<ItemList<T>>{
 
 	public final List<T> items = new ArrayList<T>()
 
@@ -16,7 +17,7 @@ public abstract class ItemList<T extends Node> implements Node{
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.nextLine()
 		reader.info("Load " + getListName())
 		if(!"{".equals(line)){
@@ -31,7 +32,7 @@ public abstract class ItemList<T extends Node> implements Node{
 		}
 
 		if(!line.startsWith("items=")){
-			reader.err('Expected item count found: ', false)
+			reader.err('Expected item count found: ', true)
 			reader.err(line)
 		}
 
@@ -44,7 +45,7 @@ public abstract class ItemList<T extends Node> implements Node{
 		reader.right()
 		while(!"};".equals(line)){
 			if(!line.startsWith("class Item")){
-				reader.err('ItemList: Expected item block. Found: ', false)
+				reader.err('ItemList: Expected item block. Found: ', true)
 				reader.err(line)
 			}
 			Node item = instanciateChild()
@@ -72,5 +73,11 @@ public abstract class ItemList<T extends Node> implements Node{
 			writer << Control.Left
 		}
 		writer << Control.Next << '};'
+	}
+
+	@Override
+	public void integrate(ItemList<T> list, Integrator integrator){
+		//TODO: Implement player filter logic probably here
+		list.items.each{ items.add(it) }
 	}
 }

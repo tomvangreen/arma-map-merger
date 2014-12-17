@@ -3,23 +3,32 @@ package sqmmerge
 import sqmmerge.model.MissionSet
 
 public class Main{
-	public final static boolean debug = true;
+	public final static boolean debug = false;
 	public static void main(String[] args){
-		//		testMerge()
-		testLoader2()
+		testMerge()
+		//		testLoader()
 	}
 
 	private static testMerge() {
 
+		//		def input =[
+		//			'data/merge-src-1.sqm'
+		//			,
+		//			'data/merge-src-2.sqm'
+		//		]
 		def input =[
-			'data/merge-src-1.sqm'
+			'data/huntingparty_respawn.Altis/mission.sqm'
 			,
-			'data/merge-src-2.sqm'
+			'data/huntingparty_bomos.Altis/mission.sqm'
+			,
+			'data/zet-huntingparty_oreokastro.Altis/mission.sqm'
+			,
+			'data/zet-huntingparty_thronos.Altis/mission.sqm'
 		]
 
 
 		def config = new Configuration()
-		config.outputFile = 'data/merge-result.sqm.generated'
+		config.outputFile = 'data/huntingparty.sqm.generated'
 		def master = input.first()
 		input.each{
 			config.missions.add(new MissionConfiguration(file: it, isMaster: master.equals(it)))
@@ -29,20 +38,6 @@ public class Main{
 	}
 
 	private static testLoader() {
-		String file = 'merge-src-2.sqm'
-		println('Loader:')
-		String fileContents = new File('data/' + file).text
-		def loader = new Loader()
-		def data = loader.load(fileContents)
-
-		println("Output:")
-		def writer = new Writer()
-		String output = writer.write(data)
-		println(output)
-
-		new File('data/' + file + '.generated').write(output)
-	}
-	private static testLoader2() {
 		String file = 'many-things.sqm'
 		println('Loader:')
 		String fileContents = new File('data/' + file).text

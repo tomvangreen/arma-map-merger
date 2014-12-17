@@ -1,0 +1,10 @@
+class Header
+{
+gameType = COOP;
+minPlayers = 1;
+maxPlayers = 5;
+};
+
+respawn = "BASE";
+respawnDelay = 3;
+respawnDialog = false;

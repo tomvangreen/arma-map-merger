@@ -1,10 +1,11 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
-class MissionSet implements Node{
+class MissionSet implements Node<MissionSet>{
 	public String version
 	public Mission mission
 	public Mission intro
@@ -23,7 +24,7 @@ class MissionSet implements Node{
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		reader.info("Loading Misison File")
 		version = reader.getLine()
 		reader.nextLine()
@@ -72,7 +73,7 @@ class MissionSet implements Node{
 	}
 
 	public void load(String content){
-		def reader = new Reader(content)
+		def reader = new ReaderImpl(content)
 		version = null
 		mission = null
 		intro = null
@@ -87,4 +88,16 @@ class MissionSet implements Node{
 		write(writer)
 		writer.flush()
 	}
+
+	@Override
+	public void integrate(MissionSet node, Integrator integrator) {
+		if(!version.equals(node.version)){
+			integrator.warn('Mission set version mismatch. ' + version + ' vs. ' + node.version)
+		}
+		mission = integrator.integrate(mission, node.mission)
+		intro = integrator.integrate(intro, node.intro)
+		outroWin = integrator.integrate(outroWin, node.outroWin)
+		outroLoose = integrator.integrate(outroLoose, node.outroLoose)
+	}
+
 }

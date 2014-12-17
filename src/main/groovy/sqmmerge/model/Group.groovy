@@ -1,11 +1,12 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
 
-public class Group implements Node {
+public class Group implements Node<Group> {
 
 	KeyValue side
 	Vehicles vehicles
@@ -17,7 +18,7 @@ public class Group implements Node {
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.getLine()
 		while(!"};".equals(line)){
 			if(line.startsWith("side=")){
@@ -33,7 +34,7 @@ public class Group implements Node {
 				waypoints.read(reader)
 			}
 			else{
-				reader.err('Group: Unknown situation: ', false)
+				reader.err('Group: Unknown situation: ', true)
 				reader.err(line)
 			}
 			line = reader.getLine()
@@ -51,5 +52,11 @@ public class Group implements Node {
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Group node, Integrator integrator) {
+		// TODO Auto-generated method stub
+
 	}
 }

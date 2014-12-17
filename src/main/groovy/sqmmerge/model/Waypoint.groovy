@@ -1,11 +1,12 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
 
-public class Waypoint implements Node {
+public class Waypoint implements Node<Waypoint> {
 
 	public KeyValue position
 	public KeyValue type
@@ -20,7 +21,7 @@ public class Waypoint implements Node {
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.getLine()
 		while(!"};".equals(line)){
 			if(line.startsWith("position[]=")){
@@ -48,7 +49,7 @@ public class Waypoint implements Node {
 				reader.nextLine()
 			}
 			else{
-				reader.err('Waypoint: Unknown situation: ', false)
+				reader.err('Waypoint: Unknown situation: ', true)
 				reader.err(line)
 			}
 			line = reader.getLine()
@@ -69,5 +70,11 @@ public class Waypoint implements Node {
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Waypoint node, Integrator integrator) {
+		// TODO Auto-generated method stub
+
 	}
 }

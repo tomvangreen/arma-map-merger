@@ -3,7 +3,7 @@ package sqmmerge.model
 
 
 
-class Effects extends ItemList<Group>{
+class Effects extends ItemList<Effect>{
 
 	@Override
 	public String getListName() {
@@ -11,7 +11,7 @@ class Effects extends ItemList<Group>{
 	}
 
 	@Override
-	public Group instanciateChild() {
+	public Effect instanciateChild() {
 		return new Effect();
 	}
 }

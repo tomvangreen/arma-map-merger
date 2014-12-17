@@ -1,11 +1,12 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.Main
 import sqmmerge.model.Writer.Control
 
 
 
-class Mission implements Node{
+class Mission implements Node<Mission>{
 	String name
 	public StringArray addOns
 	public StringArray addOnsAuto
@@ -25,10 +26,10 @@ class Mission implements Node{
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.getLine()
 		if(!line.startsWith('class ')){
-			reader.err('Invalid content. Expceted class <class-name>', false)
+			reader.err('Invalid content. Expceted class <class-name>', true)
 			reader.err(line)
 		}
 		name = line.substring(6)
@@ -44,11 +45,9 @@ class Mission implements Node{
 			readItem(reader)
 		}
 		reader.left()
-
-		//		reader.nextLine()
 	}
 
-	void readItem(Reader reader){
+	void readItem(MissionReader reader){
 		def line = reader.getLine()
 		if("addOns[]=".equals(line)){
 			addOns = new StringArray()
@@ -92,7 +91,7 @@ class Mission implements Node{
 			sensors.read(reader)
 		}
 		else{
-			reader.err('Unhandled mission item: ', false)
+			reader.err('Unhandled mission item: ', true)
 			reader.err(line)
 			reader.nextLine()
 		}
@@ -116,5 +115,20 @@ class Mission implements Node{
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Mission node, Integrator integrator) {
+		if(!node){
+			return
+		}
+		addOns = integrator.integrate(addOns, node.addOns)
+		addOnsAuto = integrator.integrate(addOnsAuto, node.addOnsAuto)
+		randomSeed = integrator.integrate(randomSeed, node.randomSeed)
+		intel = integrator.integrate(intel, node.intel)
+		groups = integrator.integrate(groups, node.groups)
+		vehicles = integrator.integrate(vehicles, node.vehicles)
+		markers = integrator.integrate(markers, node.markers)
+		sensors = integrator.integrate(sensors, node.sensors)
 	}
 }

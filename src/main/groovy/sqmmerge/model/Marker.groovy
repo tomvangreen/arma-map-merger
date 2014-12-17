@@ -1,11 +1,12 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
 
-public class Marker implements Node {
+public class Marker implements Node<Marker> {
 
 	public KeyValue position
 	public KeyValue name
@@ -16,6 +17,8 @@ public class Marker implements Node {
 	public KeyValue a
 	public KeyValue b
 	public KeyValue angle
+	public KeyValue fillName
+	public KeyValue drawBorder
 
 	@Override
 	public List<Node> getChildren() {
@@ -23,7 +26,7 @@ public class Marker implements Node {
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.getLine()
 		while(!"};".equals(line)){
 			if(line.startsWith("position[]=")){
@@ -62,8 +65,16 @@ public class Marker implements Node {
 				colorName = new KeyValue(line)
 				reader.nextLine()
 			}
+			else if(line.startsWith("fillName=")){
+				fillName = new KeyValue(line)
+				reader.nextLine()
+			}
+			else if(line.startsWith("drawBorder=")){
+				drawBorder = new KeyValue(line)
+				reader.nextLine()
+			}
 			else{
-				reader.err('Marker:  Unknown situation: ', false)
+				reader.err('Marker:  Unknown situation: ', true)
 				reader.err(line)
 			}
 			line = reader.getLine()
@@ -84,8 +95,16 @@ public class Marker implements Node {
 		a?.write(writer)
 		b?.write(writer)
 		angle?.write(writer)
+		fillName?.write(writer)
+		drawBorder?.write(writer)
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Marker node, Integrator integrator) {
+		// TODO Auto-generated method stub
+
 	}
 }

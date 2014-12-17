@@ -1,12 +1,13 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
 
 
-public class Arg implements Node {
+public class Arg implements Node<Arg> {
 
 	public KeyValue value
 	public KeyValue parentCls
@@ -18,7 +19,7 @@ public class Arg implements Node {
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.getLine()
 		while(!"};".equals(line)){
 			if(line.startsWith("value=")){
@@ -34,7 +35,7 @@ public class Arg implements Node {
 				reader.nextLine()
 			}
 			else{
-				reader.err('Arg: Unknown situation: ', false)
+				reader.err('Arg: Unknown situation: ', true)
 				reader.err(line)
 			}
 			line = reader.getLine()
@@ -52,5 +53,9 @@ public class Arg implements Node {
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Arg node, Integrator integrator) {
 	}
 }

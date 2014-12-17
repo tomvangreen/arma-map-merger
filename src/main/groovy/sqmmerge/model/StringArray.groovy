@@ -1,10 +1,11 @@
 package sqmmerge.model;
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
-public class StringArray implements Node{
+public class StringArray implements Node<StringArray>{
 	public String name
 	public List<String> strings = new ArrayList<String>()
 
@@ -14,7 +15,7 @@ public class StringArray implements Node{
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.getLine()
 		name = line.replace("[]=", '')
 		line = reader.nextLine()
@@ -23,7 +24,6 @@ public class StringArray implements Node{
 		}
 		line = reader.nextLine()
 		while(!line.equals("};")){
-			//			def item = stringArrayItem.matcher(line).group(0)
 			def len = line.size() - 1
 			if(line.endsWith(",")){
 				len--
@@ -52,5 +52,14 @@ public class StringArray implements Node{
 			writer << Control.Left
 		}
 		writer << Control.Next << '};'
+	}
+
+	@Override
+	public void integrate(StringArray other, Integrator integrator) {
+		other.strings.each{
+			if(!strings.contains(it)){
+				strings.add(it)
+			}
+		}
 	}
 }

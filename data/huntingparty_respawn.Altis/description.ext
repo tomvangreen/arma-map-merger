@@ -1,0 +1,5 @@
+respawn = 3;
+respawnDelay = 3;
+aikills = 1;
+respawnOnStart = 1;
+respawnButton = 1;

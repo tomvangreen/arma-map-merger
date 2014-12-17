@@ -1,9 +1,13 @@
 package sqmmerge.model;
 
-public interface Node{
+import sqmmerge.Integrator
+
+public interface Node<T extends Node>{
 	public List<Node> getChildren()
 
-	public void read(Reader reader)
+	public void read(MissionReader reader)
 
 	public void write(Writer writer)
+
+	public void integrate(T node, Integrator integrator)
 }

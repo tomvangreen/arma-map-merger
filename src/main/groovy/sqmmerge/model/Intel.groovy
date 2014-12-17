@@ -1,10 +1,11 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
-public class Intel implements Node{
+public class Intel implements Node<Intel>{
 	public KeyValue timeOfChanges
 	public KeyValue startWeather
 	public KeyValue startWind
@@ -33,7 +34,7 @@ public class Intel implements Node{
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.nextLine()
 		reader.info("Load Intel")
 		if(!"{".equals(line)){
@@ -52,7 +53,7 @@ public class Intel implements Node{
 		intel
 	}
 
-	def loadIntelProperty(String line, Reader reader){
+	def loadIntelProperty(String line, MissionReader reader){
 		if(line.startsWith("timeOfChanges=")){
 			timeOfChanges = new KeyValue(line)
 		}
@@ -120,7 +121,7 @@ public class Intel implements Node{
 			windForced = new KeyValue(line)
 		}
 		else{
-			reader.err('Intel: Unknown Property: ', false)
+			reader.err('Intel: Unknown Property: ', true)
 			reader.err(line)
 		}
 	}
@@ -157,5 +158,11 @@ public class Intel implements Node{
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Intel node, Integrator integrator) {
+		// TODO Auto-generated method stub
+
 	}
 }

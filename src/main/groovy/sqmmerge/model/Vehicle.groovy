@@ -1,11 +1,12 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
 
-public class Vehicle implements Node {
+public class Vehicle implements Node<Vehicle> {
 	public KeyValue position
 	public KeyValue azimut
 	public KeyValue offsetX
@@ -39,7 +40,7 @@ public class Vehicle implements Node {
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		reader.info('Load Vehicle')
 		def line = reader.getLine()
 		while(!"};".equals(line)){
@@ -144,7 +145,7 @@ public class Vehicle implements Node {
 				args.read(reader)
 			}
 			else{
-				reader.err('Vehicle: Unknown situation: ', false)
+				reader.err('Vehicle: Unknown situation: ', true)
 				reader.err(line)
 			}
 			line = reader.getLine()
@@ -184,5 +185,11 @@ public class Vehicle implements Node {
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Vehicle node, Integrator integrator) {
+		// TODO Auto-generated method stub
+
 	}
 }

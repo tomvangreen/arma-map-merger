@@ -1,11 +1,12 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
 
-public class Effect implements Node {
+public class Effect implements Node<Effect> {
 
 
 
@@ -15,11 +16,11 @@ public class Effect implements Node {
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.getLine()
 		while(!"};".equals(line)){
 			//else{
-			reader.err('Effect: Unknown situation: ', false)
+			reader.err('Effect: Unknown situation: ', true)
 			reader.err(line)
 			//}
 			line = reader.getLine()
@@ -33,5 +34,9 @@ public class Effect implements Node {
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Effect node, Integrator integrator) {
 	}
 }

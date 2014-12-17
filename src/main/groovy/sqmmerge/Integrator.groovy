@@ -2,157 +2,61 @@ package sqmmerge;
 
 import java.util.regex.Pattern
 
-public class Integrator {
-	public MissionData result;
-	private final Loader loader = new Loader()
-	private final Writer writer = new Writer()
+import sqmmerge.model.MissionSet
+import sqmmerge.model.Node
+import sqmmerge.util.Indent
 
+
+
+public class Integrator {
+	public MissionSet result;
 	Pattern listPattern = ~/items=([0-9]*);/
 
 
 	public final static String INDENT_BASE = "\t"
-	public String indent = ""
+	public final Indent indent = new Indent("  ")
 
-	def indentRight(){
-		indent = indent + INDENT_BASE
-
-		//println(indent + "> Indent on: " + indent)
+	void err(String message, boolean throwException = true){
+		System.err.println(indent + message)
+		if(throwException){
+			throw new RuntimeException(message)
+		}
 	}
 
-	def indentLeft() {
-		if(indent.length() > 1){
-			indent = indent.substring(INDENT_BASE.length())
-		}
-		else if(indent.length() == 1){
-			indent = ""
-		}
-		//println(indent + "< Indent on: " + indent)
+	void info(String message){
+		println(indent + message)
 	}
 
+	void warn(String message){
+		println('Warning: ' + indent + message)
+	}
 
 	public void integrate(Configuration config ){
-		loader.debug = false
+		//		loader.debug = false
 		for(MissionConfiguration mission : config.missions){
 			String content = new File(mission.file).text
-			MissionData data = loader.load(content)
+			MissionSet set = new MissionSet()
+			set.load(content)
 			if(result == null){
-				result = data
+				result = set
 			}
 			else{
-				integrate(data, result)
+				result.integrate(set, this)
 			}
 		}
-
-		String resultText = writer.write(result)
-		//		println(resultText)
-		new File(config.outputFile).write(resultText)
+		new File(config.outputFile).write(result.toString())
 	}
 
-	private Node sourceNode
-	private Node targetNode
-
-	public void integrate(MissionData source, MissionData target){
-		integrate(source.root, target.root)
+	public Node<? extends Node> integrate(Node<? extends Node> existing, Node<? extends Node> other){
+		if(other == null) {
+			return existing
+		}
+		else if(existing == null){
+			return other
+		}
+		existing.integrate(other, this)
+		return existing
 	}
 
-	public boolean debug = true
-	public void integrate(Node source, Node target){
-		if(debug){
-			println(indent + "Integrate Node: " + source + " into target " + target )
-		}
-		if(source == null){
-			System.err.println(indent + "Source node is null")
-			return
-		}
-		if(target == null){
-			System.err.println(indent + "Target node is null")
-			return
-		}
-		boolean sameType = source.type == target.type
-		boolean handled = false
-		if(source.type == NodeType.Root){
-			if(!sameType){
-				System.err.println(indent + "Root node must exist")
-				return
-			}
-			appendListContent(source, target)
-		}
-		else if(source.type == NodeType.Class){
-			integrateClass(source, target)
-		}
-		else if(source.type == NodeType.Array){
-			if(!sameType){
-				System.err.println(indent + "Array can only be integrated with Array")
-				return
-			}
-			integrateArray(source, target)
-		}
-		else if(source.type == NodeType.List){
-			if(!sameType){
-				System.err.println(indent + "List can only be integrated with Array")
-				return
-			}
-			integrateList(source, target)
-		}
-		else if(source.type == NodeType.ArrayItem){
-			//No Error
-		}
-		else if(source.type == NodeType.SemicolonTerminatedLine){
-			//No Error
-		}
-		else{
-			System.err.println(indent + "Integration Unhandled: " + source.type + "->" + target.type)
-		}
-	}
 
-	public void appendListContent(Node source, Node target){
-		int sourceIndex = 0
-		int targetIndex = 0
-
-		int sourceSize = target.children.size()
-		int targetSize = target.children.size()
-
-
-		for(int index = 0; index < targetSize; index++){
-			def targetChild = target.children.get(index)
-			source.children.add(copyElement(targetChild, source))
-		}
-	}
-
-	public Node copyElement(Node element, Node parent){
-		NodeType type = element.type
-		def copy = new Node(type, parent, element.data)
-
-		integrate(element, copy)
-
-		copy
-	}
-
-	public Node integrateClass(Node source, Node target){
-		target.data = source.data
-		for(Node child : source.children){
-			target.children.add(copyElement(child, target))
-		}
-	}
-
-	public Node integrateArray(Node source, Node target){
-		target.data = source.data
-		for(Node child : source.children){
-			target.children.add(copyElement(child, target))
-		}
-	}
-
-	public Node integrateList(Node source, Node target){
-		target.data = source.data
-		for(Node child : source.children){
-			String data = source.data
-			def matcher = listPattern.matcher(data == null ? "" : data)
-			if(matcher.matches()){
-				data = "Item" + (target.children.size() + 1)
-			}
-			Node copy = copyElement(child, target)
-			copy.data = data
-			target.children.add(copy)
-		}
-	}
 }

@@ -1,8 +1,9 @@
 package sqmmerge.model
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
-public class Sensor implements Node {
+public class Sensor implements Node<Sensor> {
 
 	public KeyValue position
 	public KeyValue activationBy
@@ -31,7 +32,7 @@ public class Sensor implements Node {
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 		def line = reader.getLine()
 		while(!"};".equals(line)){
 			if(line.startsWith("position[]=")){
@@ -115,7 +116,7 @@ public class Sensor implements Node {
 				reader.nextLine()
 			}
 			else{
-				reader.err('Sensor: Unknown situation: ', false)
+				reader.err('Sensor: Unknown situation: ', true)
 				reader.err(line)
 			}
 			line = reader.getLine()
@@ -150,5 +151,11 @@ public class Sensor implements Node {
 
 		writer << Control.Left << Control.Next
 		writer << '};'
+	}
+
+	@Override
+	public void integrate(Sensor node, Integrator integrator) {
+		// TODO Auto-generated method stub
+
 	}
 }

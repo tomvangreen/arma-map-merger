@@ -1,10 +1,11 @@
 package sqmmerge.model;
 
+import sqmmerge.Integrator
 import sqmmerge.model.Writer.Control
 
 
 
-public class KeyValue implements Node {
+public class KeyValue implements Node<KeyValue> {
 
 	///	public final Pattern pattern = ~/([^=]*)=([^;]*);/
 
@@ -32,12 +33,17 @@ public class KeyValue implements Node {
 	}
 
 	@Override
-	public void read(Reader reader) {
+	public void read(MissionReader reader) {
 	}
 
 	@Override
 	public void write(Writer writer) {
 		writer << Control.Next << key << '=' << value << ';'
+	}
+
+	@Override
+	public void integrate(KeyValue node, Integrator integrator) {
+
 	}
 
 }
